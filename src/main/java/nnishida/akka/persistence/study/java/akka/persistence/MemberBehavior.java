@@ -44,6 +44,8 @@ public class MemberBehavior extends EventSourcedBehavior<CommandAndEvent.Command
                     Member member = state.get(cmd.memberId);
                     if (member != null) {
                         cmd.replyTo.tell(member);
+                    } else {
+                        cmd.replyTo.tell(new Member(null, null, null));
                     }
                     return Effect().none();
                 })

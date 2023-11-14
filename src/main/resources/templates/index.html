@@ -5,6 +5,45 @@
     <title>Title</title>
 </head>
 <body>
+    <form action="/post" method="post">
+        <label>id: <input type="text" name="id" /></label><br />
+        <label>name: <input type="text" name="name"/></label><br />
+        <label>mailAddress: <input type="text" name="mailAddress" /></label><br />
+        <button type="submit">submit</button>
+        <br/><br/>
+        <div>
+            account get
+            <br/>
+            <form action="/detail" method="get">
+                <label>id: <input id="get_id" type="text" name="getId" /></label><br />
+                <button type="button" onclick="getAccount(document.getElementById('get_id').value)">get</button>
+                <br /><br />
+
+                <div id="result"></div>
+            </form>
+        </div>
+    </form>
+
+<script type="text/javascript">
+    function getAccount(id) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "/detail/" + id);
+        xhr.send();
+        xhr.responseType = "json";
+        xhr.onload = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                const account = xhr.response;
+                // resultに表示
+                document.getElementById("result").innerHTML = JSON.stringify(account);
+
+            } else {
+                console.log(`Error: ${xhr.status}`);
+            }
+        };
+    }
+
+</script>
+
 
 </body>
 </html>
